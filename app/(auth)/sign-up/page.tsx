@@ -6,10 +6,16 @@ import InputField from "@/components/forms/InputField"; // Champ texte standard
 import SelectField from "@/components/forms/SelectField"; // Champ select standard
 import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from "@/lib/constants"; // Options pour selects
 import { CountrySelectField } from "@/components/forms/CountrySelectField"; // Select pour pays
-import FooterLink from "@/components/forms/FooterLink"; // Lien vers une autre page
+import FooterLink from "@/components/forms/FooterLink";
+import {signUpWithEmail} from "@/lib/actions/auth.actions";
+import {useRouter} from "next/navigation";
+import {toast} from "sonner";
+import {error} from "better-auth/api";
+import {err} from "inngest/types"; // Lien vers une autre page
 
 const SignUp = () => {
     // Initialisation du formulaire avec react-hook-form
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -31,9 +37,13 @@ const SignUp = () => {
     // Fonction appelée à la soumission
     const onSubmit = async (data: SignUpFormData) => {
         try {
-            console.log(data); // Pour l'instant, on log les données
+            const result = await signUpWithEmail(data);
+            if (result.success) router.push('/');
         } catch (e) {
             console.error(e);
+            toast.error('Inscription échouée',{
+                description: e instanceof Error ? e.message : 'La création de compte a échouée...'
+            });
         }
     }
 

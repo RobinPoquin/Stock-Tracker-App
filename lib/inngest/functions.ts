@@ -1,5 +1,6 @@
 import { inngest } from "@/lib/inngest/client"; // Instance Inngest configurée
-import { PERSONALIZED_WELCOME_EMAIL_PROMPT } from "@/lib/inngest/prompts"; // Template du prompt utilisé pour générer l’introduction personnalisée
+import { PERSONALIZED_WELCOME_EMAIL_PROMPT } from "@/lib/inngest/prompts";
+import {sendWelcomeEmail} from "@/lib/nodemailer"; // Template du prompt utilisé pour générer l’introduction personnalisée
 
 // Création d’une fonction Inngest déclenchée lors de l’événement "app/user.created"
 export const sendSignUpEmail = inngest.createFunction(
@@ -42,7 +43,11 @@ export const sendSignUpEmail = inngest.createFunction(
                 (part && 'text' in part ? part.text : null) ||
                 "Merci d'avoir rejoint !";
 
-            // Ici la logique d’envoi d’email
+            const { data: { email, name}} = event;
+
+            return await sendWelcomeEmail({
+                email, name, intro: introText
+            })
         });
 
         return {

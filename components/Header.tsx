@@ -4,7 +4,7 @@ import Image from "next/image";         // Optimisation des images Next.js
 import Navitems from "@/components/Navitems"; // Menu de navigation
 import UserDropdown from "@/components/UserDropdown"; // Dropdown utilisateur
 
-const Header = () => {
+const Header = ({ user }: { user: User}) => {
     return (
         // Header sticky en haut de la page
         <header className="sticky top-0 header">
@@ -29,7 +29,7 @@ const Header = () => {
                 </nav>
 
                 {/* Dropdown pour l’utilisateur */}
-                <UserDropdown/>
+                <UserDropdown user={user} />
             </div>
         </header>
     );
