@@ -4,7 +4,9 @@ import { useForm } from 'react-hook-form'; // Gestion des formulaires
 import { Button } from '@/components/ui/button'; // Bouton stylisé
 import InputField from '@/components/forms/InputField'; // Champ texte standard
 import FooterLink from '@/components/forms/FooterLink'; // Lien vers une autre page
-import { useRouter } from "next/navigation"; // Pour naviguer après connexion
+import { useRouter } from "next/navigation";
+import {signInWithEmail} from "@/lib/actions/auth.actions";
+import {toast} from "sonner"; // Pour naviguer après connexion
 
 const SignIn = () => {
     const router = useRouter(); // Hook pour naviguer programmétiquement

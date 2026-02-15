@@ -13,7 +13,8 @@ import {
 import { useRouter } from "next/navigation"; // Hook Next.js pour naviguer côté client
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar" // Composants Avatar pour afficher la photo/utilisateur
 import { LogOut } from "lucide-react"; // Icône de déconnexion
-import Navitems from "@/components/Navitems"; // Liste de navigation à afficher sur mobile
+import Navitems from "@/components/Navitems";
+import {signOut} from "@/lib/actions/auth.actions"; // Liste de navigation à afficher sur mobile
 
 // Composant dropdown pour l'utilisateur connecté
 const UserDropdown = ({ user }: { user: User }) => {
@@ -22,6 +23,7 @@ const UserDropdown = ({ user }: { user: User }) => {
 
     // Fonction appelée lors de la déconnexion
     const handleSignOut = async () => {
+        await signOut();
         router.push("/sign-in"); // Redirection vers la page de connexion
     }
 
