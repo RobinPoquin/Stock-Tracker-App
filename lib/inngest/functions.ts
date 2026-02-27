@@ -4,7 +4,7 @@ import {sendNewsSummaryEmail, sendWelcomeEmail} from "@/lib/nodemailer";
 import {getAllUsersForNewsEmail} from "@/lib/actions/user.actions";
 import {getWatchlistSymbolsByEmail} from "@/lib/actions/watchlist.actions";
 import {getNews} from "@/lib/actions/finnhub.actions";
-import {formatDateToday} from "@/lib/utils"; // Template du prompt utilisé pour générer l’introduction personnalisée
+import {formatDateToday, getFormattedTodayDate} from "@/lib/utils"; // Template du prompt utilisé pour générer l’introduction personnalisée
 
 /* =========================
    EMAIL DE BIENVENUE
@@ -131,7 +131,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
                 userNewsSummaries.map(async ({ user, newsContent }) => {
                     if (!newsContent) return false;
 
-                    return await sendNewsSummaryEmail({ email: user.email, date: formatDateToday, newsContent})
+                    return await sendNewsSummaryEmail({ email: user.email, date: getFormattedTodayDate(), newsContent})
                 })
             )
         })
