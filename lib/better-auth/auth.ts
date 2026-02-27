@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth"; // Librairie d'authentification
 import { mongodbAdapter } from "better-auth/adapters/mongodb"; // Adapter MongoDB
-import { connectToDatabase } from "@/mongoose"; // Fonction de connexion MongoDB
+import { connectToDatabase } from "@/database/mongoose"; // Fonction de connexion MongoDB
 import { nextCookies } from "better-auth/next-js"; // Plugin pour gérer les cookies avec Next.js
 
 // Instance singleton pour éviter de recréer auth plusieurs fois

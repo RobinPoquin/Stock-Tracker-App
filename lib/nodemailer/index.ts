@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer"; // Librairie pour envoyer des emails depuis Node.js
 
-import { WELCOME_EMAIL_TEMPLATE } from "@/lib/nodemailer/template"; // Template HTML de l'email de bienvenue
+import {NEWS_SUMMARY_EMAIL_TEMPLATE, WELCOME_EMAIL_TEMPLATE} from "@/lib/nodemailer/template"; // Template HTML de l'email de bienvenue
 
 // Création du transporteur SMTP pour l'envoi d'emails
 export const transporter = nodemailer.createTransport({
@@ -29,6 +29,27 @@ export const sendWelcomeEmail = async ({ email, name, intro }: WelcomeEmailData)
         to: email, // Destinataire
         subject: `Bienvenue sur votre application de suivi d'investissement`, // Objet
         text: 'Merci de nous avoir rejoint', // Texte alternatif si HTML non supporté
+        html: htmlTemplate, // Contenu HTML
+    };
+
+    // Envoi de l'email via le transporteur configuré
+    await transporter.sendMail(mailOptions);
+};
+
+export const sendNewsSummaryEmail = async (
+    { email, date, newsContent }: { email: string; date: string; newsContent: string}) : Promise<void> => {
+
+    // Remplace les placeholders dans le template par les données du jour
+    const htmlTemplate = NEWS_SUMMARY_EMAIL_TEMPLATE
+        .replace('{{date}}', date)
+        .replace('{{newsContent}}', newsContent);
+
+    // Configuration de l'email à envoyer
+    const mailOptions = {
+        from: `"Stock Tracker App" <robinpqn2@gmail.com>`, // Expéditeur
+        to: email, // Destinataire
+        subject: `Rapport et News du marché - ${date}`, // Objet
+        text: 'Rapport et News du marché - ${date}', //Corp du mail
         html: htmlTemplate, // Contenu HTML
     };
 
