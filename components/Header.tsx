@@ -2,9 +2,12 @@ import React from 'react';
 import Link from "next/link";           // Pour les liens internes Next.js
 import Image from "next/image";         // Optimisation des images Next.js
 import Navitems from "@/components/Navitems"; // Menu de navigation
-import UserDropdown from "@/components/UserDropdown"; // Dropdown utilisateur
+import UserDropdown from "@/components/UserDropdown";
+import {searchStocks} from "@/lib/actions/finnhub.actions"; // Dropdown utilisateur
 
-const Header = ({ user }: { user: User}) => {
+const Header = async ({ user }: { user: User}) => {
+    const initialStocks = await searchStocks();
+
     return (
         // Header sticky en haut de la page
         <header className="sticky top-0 header">
@@ -25,11 +28,11 @@ const Header = ({ user }: { user: User}) => {
 
                 {/* Menu de navigation affiché seulement sur écran sm et plus */}
                 <nav className="hidden sm:block">
-                    <Navitems/>
+                    <Navitems initialStocks={initialStocks}/>
                 </nav>
 
                 {/* Dropdown pour l’utilisateur */}
-                <UserDropdown user={user} />
+                <UserDropdown user={user} initialStocks={initialStocks}/>
             </div>
         </header>
     );

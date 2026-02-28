@@ -17,7 +17,7 @@ import Navitems from "@/components/Navitems";
 import {signOut} from "@/lib/actions/auth.actions"; // Liste de navigation à afficher sur mobile
 
 // Composant dropdown pour l'utilisateur connecté
-const UserDropdown = ({ user }: { user: User }) => {
+const UserDropdown = ({ user, initialStocks }: { user: User, initialStocks: StockWithWatchlistStatus[]}) => {
 
     const router = useRouter(); // Hook pour gérer la navigation
 
@@ -83,7 +83,7 @@ const UserDropdown = ({ user }: { user: User }) => {
 
                 {/* Menu de navigation pour mobile */}
                 <nav className="sm:hidden">
-                    <Navitems /> {/* Liens de navigation */}
+                    <Navitems initialStocks={initialStocks}/> {/* Liens de navigation */}
                 </nav>
             </DropdownMenuContent>
         </DropdownMenu>

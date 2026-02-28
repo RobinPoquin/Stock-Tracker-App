@@ -2,9 +2,10 @@
 
 import { NAV_ITEMS } from "@/lib/constants"; // Liste des liens de navigation { href, label }
 import Link from "next/link"; // Composant Link de Next.js pour navigation interne
-import { usePathname } from "next/navigation"; // Hook pour récupérer le path actuel
+import { usePathname } from "next/navigation";
+import SearchCommand from "@/components/SearchCommand"; // Hook pour récupérer le path actuel
 
-const Navitems = () => {
+const Navitems = ({initialStocks}: {initialStocks: StockWithWatchlistStatus[]}) => {
     const pathname = usePathname(); // Récupère l'URL courante
 
     // Fonction qui détermine si un lien est actif (style différent)
@@ -16,8 +17,19 @@ const Navitems = () => {
     return (
         // Liste horizontale sur desktop, verticale sur mobile
         <ul className="flex flex-col sm:flex-row p-2 gap-3 sm:gap-10 font-medium">
-            {NAV_ITEMS.map(({ href, label }) => (
-                <li key={href}>
+            {NAV_ITEMS.map(({ href, label }) => {
+                if(label === "Search") return (
+                    <li key="search-trigger">
+                        <SearchCommand
+                            renderAs="text"
+                            label="Rechercher"
+                            initialStocks={initialStocks}
+                            //initialStocks={[{ symbol: 'TST', name: 'TEST', exchange: 'NASDAQ', type: 'TYPE'}]} //Test pour la recherche
+                        />
+                    </li>
+                )
+
+                return <li key={href}>
                     {/* Lien avec style actif et hover */}
                     <Link
                         href={href}
@@ -28,7 +40,7 @@ const Navitems = () => {
                         {label} {/* Texte du lien */}
                     </Link>
                 </li>
-            ))}
+            })}
         </ul>
     );
 }
