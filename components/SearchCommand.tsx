@@ -104,7 +104,7 @@ export default function SearchCommand({ renderAs = 'button', label = 'Ajouter St
                             {displayStock?.map((stock, i) => (
                                 <li key={stock.symbol} className="search-item">
                                     <Link
-                                        href={`/stock/${stock.symbol}`}
+                                        href={`/stocks/${stock.symbol}`}
                                         onClick={handleSelectStock} // Reset search après clic
                                         className="search-item-link"
                                     >
